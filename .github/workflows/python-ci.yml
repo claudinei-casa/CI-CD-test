@@ -1,0 +1,36 @@
+name: Python CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Fazer checkout do código
+      uses: actions/checkout@v4
+
+    - name: Configurar o Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Instalar dependências
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Executar Linter (flake8)
+      run: |
+        # Para a build se houver erros de sintaxe ou variáveis não definidas
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # Verifica a formatação do código (limite de 127 caracteres)
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Executar Testes Unitários (pytest)
+      run: |
+        pytest

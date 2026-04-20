@@ -1,1 +1,5 @@
-def say_hello():\n    return "Hello, World!"\n\nif __name__ == "__main__":\n    print(say_hello())
+def say_hello(): 
+    return "Hello, World!"
+
+if __name__ == "__main__":
+    print(say_hello())
