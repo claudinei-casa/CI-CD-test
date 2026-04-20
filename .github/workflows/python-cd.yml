@@ -1,0 +1,26 @@
+name: Python CD (Artifact)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-package:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Fazer checkout do código
+      uses: actions/checkout@v4
+
+    - name: Criar arquivo ZIP do projeto
+      run: |
+        # Cria um arquivo zip chamado release.zip com todo o conteúdo
+        # O -r indica recursivo e o -x exclui pastas desnecessárias como git e actions
+        zip -r release.zip . -x "*.git*" -x "*.github*" -x "*__pycache__*" -x "*.pytest_cache*"
+
+    - name: Fazer upload do Artefato
+      uses: actions/upload-artifact@v4
+      with:
+        name: projeto-hello-world-zip
+        path: release.zip
+        retention-days: 7
