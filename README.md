@@ -1,5 +1,6 @@
 # Projeto Hello World CI/CD
 
+
 Este é um projeto simples em Python para demonstrar um fluxo de Git e CI/CD.
 
 ## Como rodar
