@@ -31,6 +31,19 @@ jobs:
         # Verifica a formatação do código (limite de 127 caracteres)
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Executar Testes Unitários (pytest)
+    - name: Executar Testes Unitários (pytest local)
       run: |
         pytest
+
+  docker-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Fazer checkout do código
+      uses: actions/checkout@v4
+
+    - name: Construir imagem Docker
+      run: docker build -t meu-python-app .
+
+    - name: Executar Testes Unitários dentro do Docker
+      run: docker run meu-python-app pytest
