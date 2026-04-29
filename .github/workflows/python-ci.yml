@@ -35,8 +35,25 @@ jobs:
       run: |
         pytest
 
+    - name: Notificar Sucesso no Discord
+      if: success()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: "1499187955674386533"
+        webhook_token: "VzMKOnzf7p9gDkLtdx-bBzBACz5Z0nMkiviDcV2YWvE07AGhAddXYfLzLb1xa5cR8VtC"
+        message: "✅ CI Sucesso: A Pull Request no repositório ${{ github.repository }} passou em todos os testes!"
+
+    - name: Notificar Falha no Discord
+      if: failure()
+      uses: appleboy/discord-action@master
+      with:
+        webhook_id: "1499187955674386533"
+        webhook_token: "VzMKOnzf7p9gDkLtdx-bBzBACz5Z0nMkiviDcV2YWvE07AGhAddXYfLzLb1xa5cR8VtC"
+        message: "❌ CI Falha: A Pull Request no repositório ${{ github.repository }} falhou nos testes ou no linter. Verifique os logs!"
+
   docker-test:
     runs-on: ubuntu-latest
+    needs: build-and-test
 
     steps:
     - name: Fazer checkout do código
