@@ -1,5 +1,19 @@
-def say_hello(): 
+def say_hello():
     return "Hello, World!"
+
+def add(a, b):
+    return a + b
+
+def subtract(a, b):
+    return a - b
+
+def multiply(a, b):
+    return a * b
+
+def divide(a, b):
+    if b == 0:
+        raise ValueError("Cannot divide by zero")
+    return a / b
 
 if __name__ == "__main__":
     print(say_hello())
